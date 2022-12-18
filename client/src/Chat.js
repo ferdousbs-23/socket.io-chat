@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import LinkPreview from "./LinkPreview";
+
+function isValidURL(string) {
+  var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+  return (res !== null)
+};
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -7,7 +13,7 @@ function Chat({ socket, username, room }) {
 
   // const generateLinkPreview = (message) => {
   //   const isAbsoluteUrl = url => /^[a-z][a-z0-9+.-]*:/.test(url);
-  
+
   //   return isAbsoluteUrl(message) ? getLinkPreview(message).then((data) => data) : message;
   // };
 
@@ -47,14 +53,18 @@ function Chat({ socket, username, room }) {
           {messageList.map((messageContent, key) => {
             return (
               <div
-              key={key}
+                key={key}
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
               >
                 <div>
-                  <div className="message-content">
-                    <p>{messageContent.message}</p>
-                  </div>
+                  {isValidURL(messageContent.message) ? (
+                    <LinkPreview url={messageContent.message} />
+                  ) : (
+                    <div className="message-content">
+                      <p>{messageContent.message}</p>
+                    </div>
+                  )}
                   <div className="message-meta">
                     <p id="time">{messageContent.time}</p>
                     <p id="author">{messageContent.author}</p>
@@ -82,5 +92,7 @@ function Chat({ socket, username, room }) {
     </div>
   );
 }
+
+
 
 export default Chat;
