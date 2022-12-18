@@ -1,7 +1,9 @@
 # socket.io-chat
-Node/React/Socket.io Chat App
-![Alt text](1.png?raw=true)
-![Alt text](2.png?raw=true)
+## Node/React/Socket.io Chat App
+
+
+![Alt text](1.png)
+![Alt text](2.png)
 
 ## How to use
 
